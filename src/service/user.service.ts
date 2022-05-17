@@ -3,6 +3,9 @@ import { InjectEntityModel } from '@midwayjs/orm';
 import { UserEntity } from '../entity/user.entity';
 import { Repository } from 'typeorm';
 import { ILogger } from '@midwayjs/logger';
+import { Params } from '../interface';
+import { PageInfo } from '../constant/pageInfo';
+// import { PageInfo } from '../constant/pageInfo';
 
 @Provide('')
 export class UserService {
@@ -27,9 +30,20 @@ export class UserService {
   }
 
   // 查询数据
-  async findUser() {
+  async findUser(page: number, size: number, params: Params) {
     // return await this.userModel.find();
-    return await this.userModel.query('SELECT * from user');
+    // return await this.userModel.query('SELECT * from user');
+    const db = this.userModel.createQueryBuilder('user');
+    // eslint-disable-next-line eqeqeq
+    if (params.name != null && params.name != '') {
+      db.andWhere('user.name = :name', { name: `${params.name}` });
+    }
+    const res = await db
+      .select()
+      .skip((page - 1) * size)
+      .take(size)
+      .getManyAndCount();
+    return PageInfo.pageLis(size, page, res);
   }
 
   // 删除数据

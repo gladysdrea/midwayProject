@@ -8,8 +8,8 @@ import {
 } from '@midwayjs/decorator';
 import { Context } from '@midwayjs/koa';
 import { JwtService } from '@midwayjs/jwt';
-import { User, UpdateUser } from '../interface';
-import { ResultRtn } from '../constent/result';
+import { User, UpdateUser, Params } from '../interface';
+import { ResultRtn } from '../constant/result';
 import { ILogger } from '@midwayjs/logger';
 import { UserService } from '../service/user.service';
 
@@ -38,9 +38,9 @@ export class APIController {
     return ResultRtn.ofSuccess(token);
   }
 
-  @Get('/list')
-  async userList() {
-    const result = await this.user.findUser();
+  @Post('/list')
+  async userList(@Body() param: Params) {
+    const result = await this.user.findUser(1, 5, param);
     return ResultRtn.ofSuccess(result);
   }
 
