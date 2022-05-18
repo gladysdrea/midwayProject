@@ -18,3 +18,9 @@ export interface UpdateUser {
 export interface Params {
   name?: string;
 }
+
+export interface StudentParam {
+  name: string;
+  studentId: string;
+  clazzName: string;
+}

@@ -5,6 +5,10 @@ export default {
   koa: {
     port: 7001,
   },
+  cors: {
+    credentials: false,
+    origin: '*',
+  },
   jwt: {
     secret: 'xxxxxxxxxxxxxx', // fs.readFileSync('xxxxx.key')
     expiresIn: '2d', // https://github.com/vercel/ms

@@ -9,6 +9,7 @@ import { join } from 'path';
 // import { NotFoundFilter } from './filter/notfound.filter';
 import { ReportMiddleware } from './middleware/report.middleware';
 import { JwtPassportMiddleware } from './middleware/jwt.middleware';
+import * as crossDomain from '@midwayjs/cross-domain';
 
 @Configuration({
   imports: [
@@ -16,6 +17,7 @@ import { JwtPassportMiddleware } from './middleware/jwt.middleware';
     validate,
     jwt,
     orm,
+    crossDomain,
     {
       component: info,
       enabledEnvironment: ['local'],
