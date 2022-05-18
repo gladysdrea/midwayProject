@@ -10,7 +10,7 @@ export class ClassService {
   logger: ILogger;
 
   @InjectEntityModel(ClassEntity)
-  studentModel: Repository<ClassEntity>;
+  clazzModel: Repository<ClassEntity>;
 
   // save
   async saveClass() {
@@ -19,6 +19,6 @@ export class ClassService {
     cl.class_name = '三年级2班';
 
     // save entity
-    await this.studentModel.save(cl);
+    await this.clazzModel.save(cl);
   }
 }
