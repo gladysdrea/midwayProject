@@ -14,4 +14,8 @@ export class ResultRtn<T> {
   static ofSuccess<T>(data: T): ResultRtn<T> {
     return this.of(200, 'success msg', data);
   }
+
+  static ofError<T>(data: T): ResultRtn<T> {
+    return this.of(500, 'error msg', data);
+  }
 }

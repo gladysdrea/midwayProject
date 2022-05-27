@@ -9,7 +9,7 @@ import { Context } from '@midwayjs/koa';
 @Middleware()
 export class JwtPassportMiddleware extends PassportMiddleware(JwtStrategy) {
   ignore(ctx: Context): boolean {
-    return ctx.path === '/user/login';
+    return ctx.path === '/user/login' || ctx.path === '/user/register';
   }
 
   getAuthenticateOptions():

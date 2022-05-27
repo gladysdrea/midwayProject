@@ -19,28 +19,43 @@ import { UserService } from '../service/user.service';
 export class APIController {
   @Inject()
   jwt: JwtService;
+
   @Inject()
   logger: ILogger;
+
   @Inject()
   ctx: Context;
 
   @Inject()
   user: UserService;
 
+  @Post('/register')
+  async getUser(@Body() user: User){
+    const result = await this.user.saveUser(user.name, user.password);
+    if (result != null) {
+      return ResultRtn.ofSuccess(result);
+    } else {
+      return ResultRtn.of(200, '用户已注册', result);
+    }
+  }
   @Post('/login')
-  async getUser(@Body() user: User): Promise<ResultRtn<string>> {
+  async loginUser(@Body() user: User) {
+    const result = await this.user.findUserByName(user.name, user.password);
     const token = await this.jwt.sign({
       username: user.name,
       password: user.password,
     });
-    this.logger.info('token:[%s]', token);
-    await this.user.saveUser(user.name, user.password);
-    return ResultRtn.ofSuccess(token);
+    this.logger.info(result, 'result');
+    if (result != null) {
+      return ResultRtn.ofSuccess(token);
+    } else {
+      return ResultRtn.of(401, '用户不存在', result);
+    }
   }
 
   @Post('/list')
   async userList(@Body() param: Params) {
-    const result = await this.user.findUser(1, 5, param);
+    const result = await this.user.findUserList(1, 5, param);
     return ResultRtn.ofSuccess(result);
   }
 

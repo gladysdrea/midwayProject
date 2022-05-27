@@ -10,6 +10,8 @@ import { join } from 'path';
 import { ReportMiddleware } from './middleware/report.middleware';
 import { JwtPassportMiddleware } from './middleware/jwt.middleware';
 import * as crossDomain from '@midwayjs/cross-domain';
+import * as redis from '@midwayjs/redis';
+import * as rabbitmq from '@midwayjs/rabbitmq';
 
 @Configuration({
   imports: [
@@ -18,6 +20,8 @@ import * as crossDomain from '@midwayjs/cross-domain';
     jwt,
     orm,
     crossDomain,
+    redis,
+    rabbitmq,
     {
       component: info,
       enabledEnvironment: ['local'],
